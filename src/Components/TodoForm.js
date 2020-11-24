@@ -24,7 +24,7 @@ function TodoForm() {
         setstatus(event.target.value);
     };
     return (
-        <div>
+        <div className = "TodoForm">
             <Grid container direction="row" justify="center" alignItems="center" className="mainForm" >
                 <form className="mainForm__div"  >
                     <Input placeholder="Title" style={{ width: "500px" }}></Input>

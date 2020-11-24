@@ -1,0 +1,14 @@
+.TodoForm{
+    display: flex;
+}
+.TodoList__item{
+    display: flex;
+    height:100%;
+    flex-direction: column ;
+    justify-content: space-between;
+    
+}
+.TodoList__item__desc{
+    padding: 10px;
+    background-color:beige ;
+}
