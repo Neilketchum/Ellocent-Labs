@@ -11,7 +11,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
-
+import {showForm} from "../Actions/index"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Appbar() {
   const classes = useStyles();
-  
-  const [form, setform] = useState(false);
+  const todos = useSelector(state => state.todos);
+  const dispatch = useDispatch();
  
   return (
     <div className={classes.root}>
@@ -82,7 +82,7 @@ export default function Appbar() {
             color="inherit"
             aria-label="Add Todo"
           >
-            <AddCircleOutlineIcon onClick={() => setform(true)} />
+            <AddCircleOutlineIcon onClick={() => dispatch(showForm())} />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Add todo
@@ -103,7 +103,7 @@ export default function Appbar() {
         </Toolbar>
       </AppBar>
       <div>
-        {form ? <TodoForm /> : <TodoList/>}
+        {todos.showForm ? <TodoForm /> : <TodoList/>}
       </div>
   
     </div>

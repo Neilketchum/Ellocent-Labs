@@ -1,5 +1,6 @@
 import {ADD_TODO,UPDATE_TODO,DELETE_TODO,SHOWFORM} from "../Actions/types"
 const initalState = {
+    showForm:false,
     todos:[{
         title:"Test Title",
         key:1,
@@ -29,7 +30,11 @@ export default function(state = initalState,action){
                 ...state,
                 todos: [...state.todos, action.payload.todo]
             }
-            
+        case SHOWFORM:
+            return {
+                ...state,
+                showForm:!state.showForm
+            }
          default:
             return {
                 ...state
