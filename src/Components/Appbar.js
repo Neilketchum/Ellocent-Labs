@@ -71,7 +71,7 @@ export default function Appbar() {
   const classes = useStyles();
   const todos = useSelector(state => state.todos);
   const dispatch = useDispatch();
- 
+  const [search, setsearch] = useState("")
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -98,12 +98,14 @@ export default function Appbar() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value = {search}
+              onChange  = {(e)=>setsearch(e.target.value)}
             />
           </div>
         </Toolbar>
       </AppBar>
       <div>
-        {todos.showForm ? <TodoForm /> : <TodoList/>}
+        {todos.showForm ? <TodoForm /> : <TodoList search = {search}/>}
       </div>
   
     </div>

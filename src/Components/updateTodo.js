@@ -8,7 +8,9 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import {updateTodo, showUpdate, opKey} from "../Actions/index"
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +39,8 @@ function UpdateTodo() {
             key:key,
             title : title,
             description:description,
-            status:status
+            status:status,
+            date:selectedDate.toDateString()
         }
         
         
@@ -45,7 +48,10 @@ function UpdateTodo() {
         dispatch(opKey(null))
         dispatch(showUpdate())
     } 
-    
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-18T21:11:54'));
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
     
     return (
         <div className = "TodoForm">
@@ -68,6 +74,22 @@ function UpdateTodo() {
                             <MenuItem value={"In-progress"}>In Progress</MenuItem>
                             <MenuItem value={"Completed"}>Completed</MenuItem>
                         </Select>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                disableToolbar
+                                fullWidth
+                                variant="inline"
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Select Due Date"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
                     </FormControl>
                     <div className = "mainForm__btns">
                     <Button variant="contained" color="primary" type = "submit">

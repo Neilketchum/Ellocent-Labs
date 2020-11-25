@@ -5,24 +5,7 @@ const initalState = {
     showForm:false,
     showUpdate:false,
     operationKey:null,
-    todos:[{
-        title:"Test Title",
-        key:1,
-        status:"completed",
-        description:" Test Description"
-    },
-    {
-        title:"Test Title2",
-        key:2,
-        status:"completed",
-        description:" Test Description2"
-    },
-    {
-        title:"Test Title3",
-        key:3,
-        status:"completed",
-        description:" Test Description3"
-    },
+    todos:[
     ]
 }
 // eslint-disable-next-line import/no-anonymous-default-export

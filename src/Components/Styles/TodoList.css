@@ -23,3 +23,11 @@
     padding: 10px;
     background-color:beige ;
 }
+.TodoList__Details{
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+}
+.TodoList__Details__btn{
+    margin-top: -2px;
+}

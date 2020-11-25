@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
 import './Styles/TodoForm.css'
-import { useDispatch,useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { Input, TextareaAutosize, Button } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
@@ -9,8 +9,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import { uuid } from 'uuidv4';
-import {addTodo} from "../Actions/index"
-import {showForm} from "../Actions/index"
+import { addTodo } from "../Actions/index"
+import { showForm } from "../Actions/index"
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker } from "@material-ui/pickers";
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -29,28 +32,33 @@ function TodoForm() {
     const handleChange = (event) => {
         setstatus(event.target.value);
     };
-    const handleSubmit = e =>{
+    const handleSubmit = e => {
         e.preventDefault();
         const todo = {
-            key:uuid(),
-            title : title,
-            description:description,
-            status:status
+            key: uuid(),
+            title: title,
+            description: description,
+            status: status,
+            date:selectedDate.toDateString()
         }
-        
-        
+
+
         dispatch(addTodo(todo))
         dispatch(showForm())
-    } 
-    const todos = useSelector(state => state.todos);
+    }
+
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
     return (
-        <div className = "TodoForm">
+        <div className="TodoForm">
             <Grid container direction="row" justify="center" alignItems="center" className="mainForm" >
-                <form className="mainForm__div"  onSubmit = {handleSubmit}>
-                    <Input placeholder="Title" style={{ width: "500px" }} onChange = {(e)=>settitle(e.target.value)} value = {title}></Input>
+                <form className="mainForm__div" onSubmit={handleSubmit}>
+                    <Input placeholder="Title" style={{ width: "500px" }} onChange={(e) => settitle(e.target.value)} value={title}></Input>
                     <br></br>
                     <br></br>
-                    <TextareaAutosize style={{ width: "500px", height: "300px", resize: "none", padding: "12px" }} value = {description} onChange = {(e)=>setdescription(e.target.value)} />
+                    <TextareaAutosize style={{ width: "500px", height: "300px", resize: "none", padding: "12px" }} value={description} onChange={(e) => setdescription(e.target.value)} />
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">Status</InputLabel>
                         <Select
@@ -64,16 +72,34 @@ function TodoForm() {
                             <MenuItem value={"in-progress"}>In Progress</MenuItem>
                             <MenuItem value={"completed"}>Completed</MenuItem>
                         </Select>
+
+                        
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                disableToolbar
+                                fullWidth
+                                variant="inline"
+                                format="MM/dd/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Select Due Date"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
                     </FormControl>
-                    <div className = "mainForm__btns">
-                    <Button variant="contained" color="primary" type = "submit">
-                        Submit
+                    <div className="mainForm__btns">
+                        <Button variant="contained" color="primary" type="submit">
+                            Submit
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={() => dispatch(showForm())}>
-                        Close
+                        <Button variant="contained" color="secondary" onClick={() => dispatch(showForm())}>
+                            Close
                     </Button>
                     </div>
-                    
+
                 </form>
             </Grid>
         </div>
